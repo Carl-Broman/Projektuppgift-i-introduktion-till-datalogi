@@ -2,7 +2,7 @@
 
 ### Weather application using chatGPT, Dall-E and weather API
 
-##### Description of the application*
+##### Description of the application
 
 ##### How to access the application
 
