@@ -3,8 +3,9 @@
 ### Weather application using chatGPT, Dall-E and weather API
 
 #### Description of the application
-Test
 
 #### How to access the application
+
+You may access it through a website
 
 #### Extra information as frameworks, libraries, methods etc
