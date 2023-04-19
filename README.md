@@ -1,4 +1,4 @@
-# Projektuppgift-i-introduktion-till-datalogi
+# Forecaster
 
 ### Weather application using chatGPT, Dall-E and weather API
 
