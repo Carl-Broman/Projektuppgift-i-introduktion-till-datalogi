@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 
+
+// userOutputManager(location, time) (Assume location is name of place)
+
 function App() {
   return (
     <div className="App">
