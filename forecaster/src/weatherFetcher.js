@@ -3,7 +3,13 @@ dotenv.config();
 
 const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
 
-// Function which takes a location and time that later returns requested weatcher data
+/**
+ * Function that uses location and time to gather weather data and give that data to
+ * chatGPT to write a short summary of it.
+ * @param {String} location 
+ * @param {String} time 
+ * @returns {String}
+ */
 async function weatherData(location, time) {
 
     // First call to find coordinates of given location
@@ -16,8 +22,6 @@ async function weatherData(location, time) {
     // Saving both coordinates of the location as lat and lon constants
     const lat = data[0].lat.toString();
     const lon = data[0].lon.toString();
-
-    const time = time.toString();
 
     // Switch case to find exclude information of other times
     // ATTENTION NEEDS TO HAVE INPUT FROM USER BE CORRECT
@@ -34,16 +38,23 @@ async function weatherData(location, time) {
         }
     }
     // Second call to find weather data for given location and time
-    const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${timeAsked(time)}&appid=${apiKey}`;
+    const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${timeAsked(time)}&appid=${weatherApiKey}`;
 
     fetch(weatherUrl)
-        .then(response => response.json())
-        .then(data => {
-            // handle the response data here
-            console.log(data);
-        })
-        .catch(error => {
-            // handle any errors here
-            console.error(error);
-        });
+    .then(response => response.json())
+    .then(data => {
+      // call your function and pass the data as an argument
+      gptAnswer(data);
+    })
+    .catch(error => {
+      // handle any errors here
+      console.error(error);
+    });
+
+    //Temporary gptAnswer for testing
+    function gptAnswer(data) {
+        console.log(data)
+    }
+
+    //
 }
