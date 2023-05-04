@@ -12,7 +12,9 @@ const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
  * @returns {String}
  */
 export async function weatherData(date, time, location) {
-    console.log(weatherApiKey)
+    const dateString = date + "T" + time + ":00.000Z";
+    const forecastMoment = new Date(dateString);
+    console.log(forecastMoment.toISOString())
 
     // First call to find coordinates of given location
     const geocodingUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${weatherApiKey}`;
@@ -24,37 +26,20 @@ export async function weatherData(date, time, location) {
     // Saving both coordinates of the location as lat and lon constants
     const lat = data[0].lat.toString();
     const lon = data[0].lon.toString();
-
-    console.log(lat, lon)
-
-    // Switch case to find exclude information of other times
-    /* ATTENTION NEEDS TO HAVE INPUT FROM USER BE CORRECT
-    function timeAsked(time) {
-        switch (time) {
-            case "current":
-                return 'minutely, hourly, daily';
-            case "minutely":
-                return 'current, hourly, daily';
-            case "hourly":
-                return 'current, minutely, daily';
-            case "daily":
-                return 'current, minutely, hourly';
-        }
-    }*/
+    
     // Second call to find weather data for given location and time
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`;
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`;
+    console.log(weatherUrl)
 
-
-
-    fetch(weatherUrl)
-    .then(response => response.json())
-    .then(data => {
-      // call your function and pass the data as an argument
-      console.log(data);
-      return data;
-    })
-    .catch(error => {
-      // handle any errors here
-      console.error(error);
-    });
+    const weatherRespone = await fetch(weatherUrl)
+    const weatherData = await weatherRespone.json();
+    let i = 0;
+    while(i < weatherData.list.length){
+        const compareTime = new Date(weatherData.list[i].dt_txt.replace(" ", "T") + ".000Z");
+        if(compareTime > forecastMoment){
+            return weatherData.list[i];
+        }
+        i++
+    }
+    return weatherData.list[weatherData.list.length - 1];
 }
