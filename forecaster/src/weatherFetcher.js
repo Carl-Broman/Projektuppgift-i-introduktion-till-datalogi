@@ -1,11 +1,8 @@
-/*import dotenv from 'dotenv';
-dotenv.config();*/
-
 const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
 
 /**
- * Function that uses location and time to gather weather data and give that data to
- * chatGPT to write a short summary of it.
+ * Function that uses location and time to gather weather data and returns json data to
+ * work with for later
  * @param {String} location 
  * @param {String} time 
  * @param {String} date
@@ -26,7 +23,7 @@ export async function weatherData(date, time, location) {
     // Saving both coordinates of the location as lat and lon constants
     const lat = data[0].lat.toString();
     const lon = data[0].lon.toString();
-    
+
     // Second call to find weather data for given location and time
     const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`;
     console.log(weatherUrl)
