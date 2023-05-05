@@ -30,7 +30,8 @@ function App() {
     async function forecastCollecter(date, time, location) {
         const weatherResponse = await weatherFetcher.weatherData(date, time, location);
         console.log(weatherResponse);
-        setTemperature(weatherResponse.temperature); // Replace 'temperature' with the correct property name from the API response
+        let setTempVariable = weatherResponse.main.temp-272.15
+        setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
     }
 
     const handleSubmit = async (event) => {
