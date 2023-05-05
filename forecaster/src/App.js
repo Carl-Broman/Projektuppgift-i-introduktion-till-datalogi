@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import './weatherFetcher.js';
 
-const weatherFetcher = require ("./weatherFetcher");
+const weatherFetcher = require("./weatherFetcher");
 
 function App() {
     const [formData, setFormData] = useState({
@@ -11,33 +11,45 @@ function App() {
         location: '',
     });
 
+    const [backgroundImage, setBackgroundImage] = useState(
+        'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b'
+    );
+
+    const [showPopup, setShowPopup] = useState(false);
+    const [temperature, setTemperature] = useState(null);
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         console.log(name, value);
         setFormData((prevFormData) => ({
             ...prevFormData,
-            [name]: value
+            [name]: value,
         }));
     };
 
-    async function forecastCollecter(date, time, location){
-        const weatherResponse = await weatherFetcher.weatherData(date, time, location)
+    async function forecastCollecter(date, time, location) {
+        const weatherResponse = await weatherFetcher.weatherData(date, time, location);
         console.log(weatherResponse);
+        setTemperature(weatherResponse.temperature); // Replace 'temperature' with the correct property name from the API response
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Input value:', formData);
         const {date, time, location } = formData;
         forecastCollecter(date, time, location);
-        // Perform any necessary actions with the input value
+        setShowPopup(true);
+    };
+
+    const closePopup = () => {
+        setShowPopup(false);
     };
 
     return (
-        <div className="App">
+        <div className="App" style={{ backgroundImage: `url(${backgroundImage})` }}>
             <header className="App-header">
                 <h1>Forecaster</h1>
-                <h2>Enter required imformation to forecast weather</h2>
+                <h2>Enter required information to forecast weather</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="forecast-date">Date:</label>
@@ -47,7 +59,8 @@ function App() {
                             value={formData.date}
                             onChange={handleChange}
                             name="date"
-                            required />
+                            required
+                        />
                     </div>
                     <div className="input-group">
                         <label htmlFor="forecast-time">Time:</label>
@@ -57,7 +70,8 @@ function App() {
                             value={formData.time}
                             onChange={handleChange}
                             name="time"
-                            required />
+                            required
+                        />
                     </div>
                     <div className="input-group">
                         <label htmlFor="forecast-location">Location:</label>
@@ -74,6 +88,21 @@ function App() {
                     <button type="submit">Submit</button>
                 </form>
             </header>
+            {showPopup && <Popup temperature={temperature} onClose={closePopup} />}
         </div>
     );
 }
+
+function Popup({ temperature, onClose }) {
+    return (
+        <div className="popup">
+            <div className="popup-content">
+                <h3>Temperature</h3>
+                <p>{temperature}°C</p> {/* Replace °C with the correct unit if needed */}
+                <button onClick={onClose}>Close</button>
+            </div>
+        </div>
+    );
+}
+
+export default App;
