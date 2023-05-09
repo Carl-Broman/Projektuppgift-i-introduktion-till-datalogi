@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
 import './weatherFetcher.js';
+import './dalle.js';
 
 const weatherFetcher = require("./weatherFetcher");
+const dalle = require("./dalle");
 
 function App() {
     const [formData, setFormData] = useState({
@@ -30,6 +32,8 @@ function App() {
     async function forecastCollecter(date, time, location) {
         const weatherResponse = await weatherFetcher.weatherData(date, time, location);
         console.log(weatherResponse);
+        const dalleResponse = await dalle.dallePicture(weatherResponse, location)
+        console.log(dalleResponse);
         let setTempVariable = weatherResponse.main.temp-272.15
         setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
     }
