@@ -18,7 +18,7 @@ export async function dallePicture(weatherResponse, location) {
             n: 1,
             size: "256x256",
         });
-        return response;
+        return response.data[0].url;
     }
     catch(err){
         console.error(err)
