@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import './App.css';
 import './weatherFetcher.js';
 import './dalle.js';
+import './chatgpt.js';
 
 const weatherFetcher = require("./weatherFetcher");
 const dalle = require("./dalle");
+const chatgpt = require("./chatgpt");
 
 function App() {
     const [formData, setFormData] = useState({
@@ -30,10 +32,12 @@ function App() {
     };
 
     async function forecastCollecter(date, time, location) {
-        const weatherResponse = await weatherFetcher.weatherData(date, time, location);
+        const weatherResponse = await weatherFetcher.weatherData(date, time, location); // weatherResponse is json Object
         console.log(weatherResponse);
-        const dalleResponse = await dalle.dallePicture(weatherResponse, location)
+        const dalleResponse = await dalle.dallePicture(weatherResponse, location) // dalleResponse is url to picture currently set within dalle.js as 256x256 in quality
         console.log(dalleResponse);
+        const chatGPTResponse = await chatgpt.chatMessage(weatherResponse, location); // chatGPTResponse is the answer from chatgpt in string
+        console.log(chatGPTResponse); //
         let setTempVariable = weatherResponse.main.temp-272.15
         setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
     }

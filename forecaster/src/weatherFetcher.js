@@ -26,7 +26,6 @@ export async function weatherData(date, time, location) {
 
     // Second call to find weather data for given location and time
     const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`;
-    console.log(weatherUrl)
 
     const weatherRespone = await fetch(weatherUrl)
     const weatherData = await weatherRespone.json();
