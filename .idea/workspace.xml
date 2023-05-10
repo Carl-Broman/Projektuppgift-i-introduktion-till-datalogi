@@ -25,7 +25,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "gh-pages",
     "last_opened_file_path": "//wsl$/Ubuntu/root/Projektuppgift-i-introduktion-till-datalogi",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -49,7 +49,7 @@
       <workItem from="1683235794843" duration="2918000" />
       <workItem from="1683286015076" duration="718000" />
       <workItem from="1683286752999" duration="4438000" />
-      <workItem from="1683751365029" duration="1025000" />
+      <workItem from="1683751365029" duration="1573000" />
     </task>
     <servers />
   </component>
