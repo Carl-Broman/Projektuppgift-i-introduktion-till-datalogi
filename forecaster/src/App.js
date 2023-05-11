@@ -19,6 +19,10 @@ function App() {
         'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b'
     );
 
+    const [loadingImage, setLoadingImage] = useState(
+        'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b'
+    );
+
     const [loading, setLoading] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [temperature, setTemperature] = useState(null);
@@ -105,11 +109,11 @@ function App() {
                             required
                         />
                     </div>
-                    <button type="submit">Submit</button>
+                    <button type="submit">Submit  </button>
                 </form>
             </header>
             {loading ? (
-                <div className="loading-screen">Loading...</div>
+                <div className="loading-screen" style={{ backgroundImage: `url(${loadingImage})` }}>Loading...</div>
             ) : (
                 showPopup && (
                     <Popup temperature={temperature} chatGPTResponse={chatGPTOutput} onClose={closePopup} />
@@ -133,3 +137,6 @@ function Popup({ temperature, chatGPTResponse, onClose }) {
 }
 
 export default App;
+
+
+

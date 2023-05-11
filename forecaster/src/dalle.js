@@ -16,7 +16,7 @@ export async function dallePicture(weatherResponse, location) {
         const response = await openai.createImage({
             prompt: `Realistic view of ${location}, the weather is ${weatherResponse.weather[0].description}`,
             n: 1,
-            size: "256x256",
+            size: "1024x1024",
         });
         console.log(response);
         console.log(weatherResponse.weather.description);
