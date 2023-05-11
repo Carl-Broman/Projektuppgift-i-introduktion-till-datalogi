@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Projektuppgift-i-introduktion-till-datalogi/static/css/main.62caabe0.css",
-    "main.js": "/Projektuppgift-i-introduktion-till-datalogi/static/js/main.fcb24426.js",
+    "main.js": "/Projektuppgift-i-introduktion-till-datalogi/static/js/main.562adeea.js",
     "static/js/787.33e05e0b.chunk.js": "/Projektuppgift-i-introduktion-till-datalogi/static/js/787.33e05e0b.chunk.js",
     "index.html": "/Projektuppgift-i-introduktion-till-datalogi/index.html",
     "main.62caabe0.css.map": "/Projektuppgift-i-introduktion-till-datalogi/static/css/main.62caabe0.css.map",
-    "main.fcb24426.js.map": "/Projektuppgift-i-introduktion-till-datalogi/static/js/main.fcb24426.js.map",
+    "main.562adeea.js.map": "/Projektuppgift-i-introduktion-till-datalogi/static/js/main.562adeea.js.map",
     "787.33e05e0b.chunk.js.map": "/Projektuppgift-i-introduktion-till-datalogi/static/js/787.33e05e0b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.62caabe0.css",
-    "static/js/main.fcb24426.js"
+    "static/js/main.562adeea.js"
   ]
 }
