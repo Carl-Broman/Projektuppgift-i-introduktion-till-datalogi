@@ -37,7 +37,7 @@ function App() {
         const dalleResponse = await dalle.dallePicture(weatherResponse, location) // dalleResponse is url to picture currently set within dalle.js as 256x256 in quality
         console.log(dalleResponse);
         const chatGPTResponse = await chatgpt.chatMessage(weatherResponse, location); // chatGPTResponse is the answer from chatgpt in string
-        console.log(chatGPTResponse); //
+        console.log(chatGPTResponse);
         let setTempVariable = weatherResponse.main.temp-272.15
         setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
         setBackgroundImage(dalleResponse);
