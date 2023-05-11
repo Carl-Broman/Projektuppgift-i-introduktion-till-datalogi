@@ -21,6 +21,7 @@ function App() {
 
     const [showPopup, setShowPopup] = useState(false);
     const [temperature, setTemperature] = useState(null);
+    const [chatGPTOutput, setChatGPTOutput] = useState('');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -34,13 +35,14 @@ function App() {
     async function forecastCollecter(date, time, location) {
         const weatherResponse = await weatherFetcher.weatherData(date, time, location); // weatherResponse is json Object
         console.log(weatherResponse);
+        let setTempVariable = weatherResponse.main.temp-272.15
+        setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
         const dalleResponse = await dalle.dallePicture(weatherResponse, location) // dalleResponse is url to picture currently set within dalle.js as 256x256 in quality
         console.log(dalleResponse);
         const chatGPTResponse = await chatgpt.chatMessage(weatherResponse, location); // chatGPTResponse is the answer from chatgpt in string
         console.log(chatGPTResponse);
-        let setTempVariable = weatherResponse.main.temp-272.15
-        setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
         setBackgroundImage(dalleResponse);
+        setChatGPTOutput(chatGPTResponse);
     }
 
     const handleSubmit = async (event) => {
@@ -98,17 +100,18 @@ function App() {
                     <button type="submit">Submit</button>
                 </form>
             </header>
-            {showPopup && <Popup temperature={temperature} onClose={closePopup} />}
+            {showPopup && <Popup temperature={temperature} chatGPTResponse={chatGPTOutput} onClose={closePopup} />}
         </div>
     );
 }
 
-function Popup({ temperature, onClose }) {
+function Popup({ temperature, chatGPTResponse, onClose }) {
     return (
         <div className="popup">
             <div className="popup-content">
                 <h3>Temperature</h3>
                 <p>{temperature}°C</p> {/* Replace °C with the correct unit if needed */}
+                <p>{chatGPTResponse}</p>
                 <button onClick={onClose}>Close</button>
             </div>
         </div>
