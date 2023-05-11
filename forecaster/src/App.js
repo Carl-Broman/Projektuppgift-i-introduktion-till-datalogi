@@ -40,6 +40,7 @@ function App() {
         console.log(chatGPTResponse); //
         let setTempVariable = weatherResponse.main.temp-272.15
         setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
+        setBackgroundImage(dalleResponse);
     }
 
     const handleSubmit = async (event) => {
