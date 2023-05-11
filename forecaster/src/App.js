@@ -19,6 +19,7 @@ function App() {
         'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b'
     );
 
+    const [loading, setLoading] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [temperature, setTemperature] = useState(null);
     const [chatGPTOutput, setChatGPTOutput] = useState('');
@@ -32,25 +33,32 @@ function App() {
         }));
     };
 
-    async function forecastCollecter(date, time, location) {
-        const weatherResponse = await weatherFetcher.weatherData(date, time, location); // weatherResponse is json Object
-        console.log(weatherResponse);
-        let setTempVariable = weatherResponse.main.temp-272.15
-        setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
-        const dalleResponse = await dalle.dallePicture(weatherResponse, location) // dalleResponse is url to picture currently set within dalle.js as 256x256 in quality
-        console.log(dalleResponse);
-        const chatGPTResponse = await chatgpt.chatMessage(weatherResponse, location); // chatGPTResponse is the answer from chatgpt in string
-        console.log(chatGPTResponse);
-        setBackgroundImage(dalleResponse);
-        setChatGPTOutput(chatGPTResponse);
+    async function forecastCollector(date, time, location) {
+        setLoading(true);
+        try {
+            const weatherResponse = await weatherFetcher.weatherData(date, time, location);
+            console.log(weatherResponse);
+            let setTempVariable = weatherResponse.main.temp - 272.15;
+            setTemperature(setTempVariable.toFixed(2));
+            const dalleResponse = await dalle.dallePicture(weatherResponse, location);
+            console.log(dalleResponse);
+            const chatGPTResponse = await chatgpt.chatMessage(weatherResponse, location);
+            console.log(chatGPTResponse);
+            setBackgroundImage(dalleResponse);
+            setChatGPTOutput(chatGPTResponse);
+            setShowPopup(true);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Input value:', formData);
-        const {date, time, location } = formData;
-        forecastCollecter(date, time, location);
-        setShowPopup(true);
+        const { date, time, location } = formData;
+        forecastCollector(date, time, location);
     };
 
     const closePopup = () => {
@@ -100,7 +108,13 @@ function App() {
                     <button type="submit">Submit</button>
                 </form>
             </header>
-            {showPopup && <Popup temperature={temperature} chatGPTResponse={chatGPTOutput} onClose={closePopup} />}
+            {loading ? (
+                <div className="loading-screen">Loading...</div>
+            ) : (
+                showPopup && (
+                    <Popup temperature={temperature} chatGPTResponse={chatGPTOutput} onClose={closePopup} />
+                )
+            )}
         </div>
     );
 }
@@ -110,7 +124,7 @@ function Popup({ temperature, chatGPTResponse, onClose }) {
         <div className="popup">
             <div className="popup-content">
                 <h3>Temperature</h3>
-                <p>{temperature}°C</p> {/* Replace °C with the correct unit if needed */}
+                <p>{temperature}°C</p>
                 <p>{chatGPTResponse}</p>
                 <button onClick={onClose}>Close</button>
             </div>
