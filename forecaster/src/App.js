@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
-import weatherFetcher from './weatherFetcher';
-import dalle from './dalle';
-import chatgpt from './chatgpt';
+import './weatherFetcher.js';
+import './dalle.js';
+import './chatgpt.js';
 
 const weatherFetcher = require("./weatherFetcher");
 const dalle = require("./dalle");
@@ -31,23 +31,23 @@ function App() {
         }));
     };
 
-    async function forecastCollector(date, time, location) {
-        const weatherResponse = await weatherFetcher.weatherData(date, time, location);
+    async function forecastCollecter(date, time, location) {
+        const weatherResponse = await weatherFetcher.weatherData(date, time, location); // weatherResponse is json Object
         console.log(weatherResponse);
-        const dalleResponse = await dalle.dallePicture(weatherResponse, location);
+        const dalleResponse = await dalle.dallePicture(weatherResponse, location) // dalleResponse is url to picture currently set within dalle.js as 256x256 in quality
         console.log(dalleResponse);
-        const chatGPTResponse = await chatgpt.chatMessage(weatherResponse, location);
-        console.log(chatGPTResponse);
-        const setTempVariable = weatherResponse.main.temp - 272.15;
-        setTemperature(setTempVariable.toFixed(2));
+        const chatGPTResponse = await chatgpt.chatMessage(weatherResponse, location); // chatGPTResponse is the answer from chatgpt in string
+        console.log(chatGPTResponse); //
+        let setTempVariable = weatherResponse.main.temp-272.15
+        setTemperature(setTempVariable.toFixed(2)); // Replace 'temperature' with the correct property name from the API response
         setBackgroundImage(dalleResponse);
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Input value:', formData);
-        const { date, time, location } = formData;
-        await forecastCollector(date, time, location);
+        const {date, time, location } = formData;
+        forecastCollecter(date, time, location);
         setShowPopup(true);
     };
 
