@@ -4,6 +4,10 @@ import weatherFetcher from './weatherFetcher';
 import dalle from './dalle';
 import chatgpt from './chatgpt';
 
+const weatherFetcher = require("./weatherFetcher");
+const dalle = require("./dalle");
+const chatgpt = require("./chatgpt");
+
 function App() {
     const [formData, setFormData] = useState({
         date: '',
