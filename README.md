@@ -10,7 +10,7 @@ Users can interact with a chatbot powered by Open AI, which can answer weather-r
 
 Users can access the Weather application through cloning it form this github. They can then host the app locally or on an website. For this to work they should add an OpenAI API and an OpenWeather api to the .env.local. 
 
-WHen you enter the hoste site you will be presented with an input box. Users can enter their weather-related query into the input box, such as "What's the weather like in New York City?" or "What's the forecast for tomorrow in London?" inorder to acess application. 
+When you enter the host site, you will be presented by three input boxes of which you put in date, time and location. The program will, after a few seconds, create an AI written message about the weather at that time and the background will change to that location with said weather condition. 
 
 #### Frameworks, libraries, methods etc
 
